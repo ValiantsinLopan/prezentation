@@ -1,0 +1,589 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>TOP 10 ES6 features</title>
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/night.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h2>TOP 10 ES6 features</h2>
+				<p>
+					<small>Created by <a href="https://github.com/ValiantsinLopan" target="_blank">Valentin Lopan</a></small>
+				</p>
+			</section>
+			<section>
+				<section>
+					<h2>ECMAScript 6 Overview</h2>
+				</section>
+				<section>
+					<p> The sixth edition, initially known as ECMAScript 6 (ES6)
+						and later renamed to ECMAScript 2015 (ES2015) adds significant new syntax for writing complex applications,
+						including classes and modules, but defines them semantically in the same terms as ECMAScript 5 strict mode.
+						Other new features include iterators and for/of loops, Python-style generators and generator expressions,
+						arrow functions, binary data, typed arrays, collections (maps, sets and weak maps), promises,
+						number and math enhancements, reflection, and proxies (metaprogramming for virtual objects and wrappers).
+					</p>
+				</section>
+				<section>
+					<p> Though ES6 specification is not super-fresh, many developers are still not so familiar with it. The main
+						reason is probably poor support in web browsers just after specification release. Currently, the specification is
+						over 3 years old, and a lot of modern web browsers work well with ES6. Even if you don’t use the most recent
+						version of web browser, you can use transpilers (like Babel), which transforms ES6 sources to ES5 sources during
+						the build process of the application.
+					</p>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h3>1. const and let keywords</h3>
+				</section>
+				<section>
+					<p>const enables you to define constants (finally!). let enables you to define variables. That’s great, but don’t
+						we have variables in JavaScript already? Yes, that’s true, but variables declared by var have function scope and
+						are hoisted to the top. It means that a variable can be used before it has been declared. let variables and
+						constants have block scope (surrounded by {}) and cannot be used before declaration.</p>
+				</section>
+				<section>
+					<h3>Example code:</h3>
+					<pre><code class="hljs" data-trim contenteditable>
+									function f() {
+										var x = 1
+										let y = 2
+										const z = 3
+										{
+										  var x = 100
+										  let y = 200
+										  const z = 300
+										  console.log('x in block scope is', x)
+										  console.log('y in block scope is', y)
+										  console.log('z in block scope is', z)
+										}
+										console.log('x outside of block scope is', x)
+										console.log('y outside of block scope is', y)
+										console.log('z outside of block scope is', z)
+									  }
+					</code></pre>
+				</section>
+				<section>
+					<h3>Output:</h3>
+					<pre><code class="hljs" data-trim contenteditable>
+									x in block scope is 100 
+									y in block scope is 200 
+									z in block scope is 300 
+									x outside of block scope is 100 
+									y outside of block scope is 2 
+									z outside of block scope is 3 
+					</code></pre>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h3>2. Array helper functions</h3>
+				</section>
+				<section>
+					<p>New cool helper functions appeared, which facilitate work with JS arrays in most useful cases. How many times
+						did you implement logic like: filtering, checking if any or all elements meet the condition, or elements
+						conversion? Probably very often. Now you have great language features to do the work for you. </p>
+				</section>
+				<section>
+					<h3>forEach</h3>
+					<p>Executes the provided function for each element of the array, passing the array element as an argument.</p>
+					<pre><code class="hljs" data-trim contenteditable>
+										var colors = ['red', 'green', 'blue']
+
+										function print(val) {
+										  console.log(val)
+										}
+										
+										colors.forEach(print)
+
+										red 
+										green 
+										blue
+					</code></pre>
+				</section>
+				<section>
+					<h3>map</h3>
+					<p>Creates a new array containing the same number of elements, but output elements are created by the provided
+						function. It just converts each array element to something else.</p>
+					<pre><code class="hljs" data-trim contenteditable>
+										var colors = ['red', 'green', 'blue']
+
+										function capitalize(val) {
+											return val.toUpperCase()
+										}
+										
+										var capitalizedColors = colors.map(capitalize)
+										
+										console.log(capitalizedColors)
+
+										["RED","GREEN","BLUE"] 
+					</code></pre>
+				</section>
+				<section>
+						<h3>filter</h3>
+						<p>Creates a new array containing a subset of the original array. The result has these elements that pass the test implemented by the provided function, which should return true or false.</p>
+						<pre><code class="hljs" data-trim contenteditable>
+											var values = [1, 60, 34, 30, 20, 5]
+
+											function lessThan20(val) {
+												return val < 20
+											}
+
+											var valuesLessThan20 = values.filter(lessThan20)
+
+											console.log(valuesLessThan20)
+	
+
+											[1,5] 
+						</code></pre>
+				</section>
+				<section>
+						<h3>find</h3>
+						<p>Finds the first element that passes the test implemented by the provided function, which should return true or false.</p>
+						<pre><code class="hljs" data-trim contenteditable>
+											var people = [
+												{name: 'Jack', age: 50},
+												{name: 'Michael', age: 9}, 
+												{name: 'John', age: 40}, 
+												{name: 'Ann', age: 19}, 
+												{name: 'Elisabeth', age: 16}
+											]
+
+											function teenager(person) {
+												return person.age > 10 && person.age < 20
+											}
+
+											var firstTeenager = people.find(teenager)
+
+											console.log('First found teenager:', firstTeenager.name)
+
+											First found teenager: Ann
+						</code></pre>
+				</section>
+				<section>
+						<h3>every</h3>
+						<p>Checks if every element of the array passes the test implemented by the provided function, which should return true or false.</p>
+						<pre><code class="hljs" data-trim contenteditable>
+											var people = [
+												{name: 'Jack', age: 50},
+												{name: 'Michael', age: 9}, 
+												{name: 'John', age: 40}, 
+												{name: 'Ann', age: 19}, 
+												{name: 'Elisabeth', age: 16}
+											]
+
+											function teenager(person) {
+												return person.age > 10 && person.age < 20
+											}
+
+											var everyoneIsTeenager = people.every(teenager)
+
+											console.log('Everyone is teenager: ', everyoneIsTeenager)
+
+
+											Everyone is teenager:  false 
+						</code></pre>
+				</section>
+				<section>
+						<h3>some</h3>
+						<p>Checks if any element of the array passes the test implemented by the provided function, which should return true or false.</p>
+						<pre><code class="hljs" data-trim contenteditable>
+											var people = [
+												{name: 'Jack', age: 50},
+												{name: 'Michael', age: 9}, 
+												{name: 'John', age: 40}, 
+												{name: 'Ann', age: 19}, 
+												{name: 'Elisabeth', age: 16}
+											]
+
+											function teenager(person) {
+												return person.age > 10 && person.age < 20
+											}
+											
+											var thereAreTeenagers = people.some(teenager)
+											
+											console.log('There are teenagers:', thereAreTeenagers)
+
+
+											There are teenagers: true 
+						</code></pre>
+				</section>
+				<section>
+						<h3>reduce</h3>
+						<p>Applies a function passed as the first parameter against an accumulator and each element in the array (from left to right), thus reducing it to a single value. The initial value of the accumulator should be provided as the second parameter of the reduce function.</p>
+						<pre><code class="hljs" data-trim contenteditable>
+											var array = [1, 2, 3, 4]
+
+											function sum(acc, value) {
+											return acc + value
+											}
+
+											function product(acc, value) {
+											return acc * value
+											}
+
+											var sumOfArrayElements = array.reduce(sum, 0)
+											var productOfArrayElements = array.reduce(product, 1)
+
+											console.log('Sum of', array, 'is', sumOfArrayElements)
+											console.log('Product of', array, 'is', productOfArrayElements)
+
+
+											Sum of [1,2,3,4] is 10 
+											Product of [1,2,3,4] is 24 
+						</code></pre>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h3>3. Arrow functions</h3>
+				</section>
+				<section>
+					<p>Implementation of very simple functions (like the aforementioned sum or product) requires writing a lot of boilerplate. Is there any remedy for that? Yes, arrow functions!</p>
+					<pre><code class="hljs" data-trim contenteditable>
+									var array = [1, 2, 3, 4]
+
+									const sum = (acc, value) => acc + value
+									const product = (acc, value) => acc * value
+									
+									var sumOfArrayElements = array.reduce(sum, 0)
+									var productOfArrayElements = array.reduce(product, 1)
+					</code></pre>
+				</section>
+				<section>
+						<p>Arrow functions can also be inline. It really simplifies the code:</p>
+						<pre><code class="hljs" data-trim contenteditable>
+										var array = [1, 2, 3, 4]
+
+										var sumOfArrayElements = array.reduce((acc, value) => acc + value, 0)
+										var productOfArrayElements = array.reduce((acc, value) => acc * value, 1)
+						</code></pre>
+				</section>
+				<section>
+						<p>Arrow functions can also be more complex and have many lines of code:</p>
+						<pre><code class="hljs" data-trim contenteditable>
+										var array = [1, 2, 3, 4]
+
+										const sum = (acc, value) => {
+										const result = acc + value
+										console.log(acc, ' plus ', value, ' is ', result)
+										return result
+										}
+
+										var sumOfArrayElements = array.reduce(sum, 0)
+						</code></pre>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h3>4. Classes</h3>
+				</section>
+				<section>
+					<p>Which Java developer doesn’t miss classes when switching to a JS project? Who doesn’t like explicit inheritance, like in Java language, instead of writing magic code for prototypal inheritance? Although some JS developers complained, classes have been introduced in ES6. They don’t change the concept of inheritance. They are just syntactic sugar for prototypal inheritance.</p>
+				</section>
+				<section>
+					<h4>Example:</h4>
+					<pre><code class="hljs" data-trim contenteditable>
+							class Point {
+								constructor(x, y) {
+									this.x = x
+									this.y = y
+								}
+							
+								toString() {
+									return '[X=' + this.x + ', Y=' + this.y + ']'
+								}
+							}
+					</code></pre>
+				</section>
+				<section>
+						<pre><code class="hljs" data-trim contenteditable>
+								class ColorPoint extends Point {
+									static default() {
+										return new ColorPoint(0, 0, 'black')
+									}
+								
+									constructor(x, y, color) {
+										super(x, y)
+										this.color = color
+									}
+								
+									toString() {
+										return '[X=' + this.x + ', Y=' + this.y + ', color=' + this.color + ']'
+									}
+								}
+						</code></pre>
+				</section>
+				<section>
+						<pre><code class="hljs" data-trim contenteditable>
+								console.log('The first point is ' + new Point(2, 10))
+								console.log('The second point is ' + new ColorPoint(2, 10, 'green'))
+								console.log('The default color point is ' + ColorPoint.default())
+
+
+								The first point is [X=2, Y=10] 
+								The second point is [X=2, Y=10, color=green] 
+								The default color point is [X=0, Y=0, color=black] 
+						</code></pre>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h3>5. Enhanced object literals</h3>
+				</section>
+				<section>
+					<h4>Object literals have been enhanced. Now we can much more easily:</h4>
+					<ul>
+						<li>define fields with variable assignment of the same name</li>
+						<li>define functions</li>
+						<li>define dynamic (calculated) properties</li>	
+					</ul>
+				</section>
+				<section>
+						<pre><code class="hljs" data-trim contenteditable>
+								const color = 'red'
+								const point = {
+								x: 5,
+								y: 10,
+								color,
+								toString() {
+									return 'X=' + this.x + ', Y=' + this.y + ', color=' + this.color
+								},
+								[ 'prop_' + 42 ]: 42
+								}
+
+								console.log('The point is ' + point)
+								console.log('The dynamic property is ' + point.prop_42)
+
+								The point is X=5, Y=10, color=red 
+								The dynamic property is 42 
+						</code></pre>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h3>6. Template strings</h3>	
+				</section>
+				<section>
+					<p>Who loves writing large string and variables concatenation? Who hates reading it? Fortunately, ES6 introduces very easy-to-use string templates with placeholders for variables.</p>
+				</section>
+				<section>
+						<pre><code class="hljs" data-trim contenteditable>
+								function hello(firstName, lastName) {
+									return `Good morning ${firstName} ${lastName}! 
+								  How are you?`
+								  }
+								  
+								  console.log(hello('Jan', 'Kowalski'))
+
+
+
+								  Good morning Jan Kowalski! 
+								  How are you? 
+						</code></pre>
+						<p>We can write multi-line text. Important: Use backticks instead of apostrophes to wrap the text.</p>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h3>7. Default function arguments</h3>
+				</section>
+				<section>
+					<p>Don’t you like providing all possible function parameters? Use defaults.</p>
+					<pre><code class="hljs" data-trim contenteditable>
+							function sort(arr = [], direction = 'ascending') {
+								console.log('I\'m going to sort the array', arr, direction)
+							  }
+							  
+							  sort([1, 2, 3])
+							  sort([1, 2, 3], 'descending')
+
+
+							  I'm going to sort the array [1,2,3] ascending 
+							  I'm going to sort the array [1,2,3] descending 
+					</code></pre>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h3>8. Rest and spread operators</h3>
+				</section>
+				<section>
+					<h4>Spread</h4>
+					<p>It enables extraction of array or object content as single elements.</p>
+					<p>Example — make shallow copy of array:</p>
+					<pre><code class="hljs" data-trim contenteditable>
+							var array = ['red', 'blue', 'green']
+							var copyOfArray = [...array]
+
+							console.log('Copy of', array, 'is', copyOfArray)
+							console.log('Are', array, 'and', copyOfArray, 'same?', array === copyOfArray)
+
+							Copy of ["red","blue","green"] is ["red","blue","green"] 
+							Are ["red","blue","green"] and ["red","blue","green"] same? false 
+
+					</code></pre>
+				</section>
+				<section>
+					<p>Example — merge arrays:</p>
+					<pre><code class="hljs" data-trim contenteditable>
+							var defaultColors = ['red', 'blue', 'green']
+							var userDefinedColors = ['yellow', 'orange']
+
+							var mergedColors = [...defaultColors, ...userDefinedColors]
+
+							console.log('Merged colors', mergedColors)
+
+
+							Merged colors ["red","blue","green","yellow","orange"] 
+					</code></pre>
+				</section>
+				<section>
+					<h4>Rest</h4>
+					<p>Would you like to bind the first few function parameters to variables, and others to single variables as an array? Now you can do it quite easily.</p>
+					<pre><code class="hljs" data-trim contenteditable>
+							function printColors(first, second, third, ...others) {
+								console.log('Top three colors are ' + first + ', ' + second + ' and ' + third + '. Others are: ' + others)
+							  }
+							  printColors('yellow', 'blue', 'orange', 'white', 'black')
+
+							Top three colors are yellow, blue and orange. Others are: white,black 
+					</code></pre>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h3>9. Destructuring</h3>
+				</section>
+				<section>
+					<h4>Of array</h4>
+					<p>Enables extraction of requested elements from the array and assigning them to variables.</p>
+					<pre><code class="hljs" data-trim contenteditable>
+							function printFirstAndSecondElement([first, second]) {
+								console.log('First element is ' + first + ', second is ' + second)
+							}
+							
+							function printSecondAndFourthElement([, second, , fourth]) {
+								console.log('Second element is ' + second + ', fourth is ' + fourth)
+							}
+							
+							var array = [1, 2, 3, 4, 5]
+							
+							printFirstAndSecondElement(array)
+							printSecondAndFourthElement(array)
+
+
+							First element is 1, second is 2 
+							Second element is 2, fourth is 4 
+					</code></pre>
+				</section>
+				<section>
+						<h4>Of object</h4>
+						<p>Enables extraction of requested properties from the object and assigning them to variables of the same name as properties.</p>
+						<pre><code class="hljs" data-trim contenteditable>
+								function printBasicInfo({firstName, secondName, profession}) {
+									console.log(firstName + ' ' + secondName + ' - ' + profession)
+								}
+								
+								var person = {
+								  firstName: 'John',
+								  secondName: 'Smith',
+								  age: 33,
+								  children: 3,
+								  profession: 'teacher'
+								}
+								
+								printBasicInfo(person)
+
+
+								John Smith - teacher 
+						</code></pre>
+					</section>
+			</section>
+			<section>
+				<section>
+					<h3>10. Promises</h3>
+				</section>
+				<section>
+					<p>Promise promises that you would get in future results of deferred or long-running tasks. Promise has two channels: the first for results, the second for potential errors. To get the result, you provide the callback function as the ‘then’ function parameter. To handle errors, you provide the callback function as the ‘catch’ function parameter.
+					Please notice that output of the example might differ for each execution, because of random function call.</p>
+				</section>
+				<section>
+					<h4>Example:</h4>
+					<pre><code class="hljs" data-trim contenteditable>
+							function asyncFunc() {
+								return new Promise((resolve, reject) => {
+									setTimeout(() => {
+									  const result = Math.random();
+									  result > 0.5 ? resolve(result) : reject('Oppps....I cannot calculate')
+									}, 1)
+								});
+							}
+							
+							for (let i=0; i<10; i++) {
+								asyncFunc()
+									.then(result => console.log('Result is: ' + result))
+									.catch(result => console.log('Error: ' + result))
+							}
+					</code></pre>
+				</section>
+				<section>
+					<h4>Result:</h4>
+					<pre><code class="hljs" data-trim contenteditable>
+							Result is: 0.7930997430022211 
+							Error: Oppps....I cannot calculate 
+							Result is: 0.6412258210597288 
+							Result is: 0.7890325910244533 
+							Error: Oppps....I cannot calculate 
+							Error: Oppps....I cannot calculate 
+							Result is: 0.8619834683310168 
+							Error: Oppps....I cannot calculate 
+							Error: Oppps....I cannot calculate 
+							Result is: 0.8258410427354488 
+					</code></pre>
+				</section>
+			</section>
+		</div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+			]
+		});
+	</script>
+</body>
+
+</html>
